@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -40,7 +41,10 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.maps.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlin.serialization)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
