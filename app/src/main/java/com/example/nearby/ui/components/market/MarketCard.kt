@@ -1,6 +1,5 @@
 package com.example.nearby.ui.components.market
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,13 +27,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.example.nearby.data.model.Market
-import com.example.nearby.ui.theme.Gray100
-import com.example.nearby.ui.theme.Gray200
 import com.example.nearby.R
-import com.example.nearby.ui.theme.Gray400
-import com.example.nearby.ui.theme.Gray500
-import com.example.nearby.ui.theme.RedBase
 import com.example.nearby.ui.theme.Typography
 
 @Composable
@@ -45,8 +41,8 @@ fun MarketCard(
     Card(
         modifier = modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(Gray100)
-            .border(width = 1.dp, color = Gray200, shape = RoundedCornerShape(12.dp)),
+            .background(MaterialTheme.colorScheme.background)
+            .border(width = 1.dp, color = MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(12.dp)),
         onClick = {
             onClick(market)
         }
@@ -54,19 +50,19 @@ fun MarketCard(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Gray100)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .fillMaxWidth(0.3f)
                     .height(IntrinsicSize.Min)
                     .aspectRatio(ratio = 1f, matchHeightConstraintsFirst = true),
                 contentScale = ContentScale.Crop,
-                painter = painterResource(R.drawable.img_burger), // TODO: mudar depois
+                model = market.cover,
                 contentDescription = "Imagem da loja"
             )
             Column {
@@ -76,7 +72,7 @@ fun MarketCard(
                     text = market.description,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    color = Gray500,
+                    color = MaterialTheme.colorScheme.onSurface,
                     style = Typography.bodyLarge.copy(fontSize = 12.sp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -86,13 +82,13 @@ fun MarketCard(
                 ) {
                     Icon(
                         modifier = Modifier.size(24.dp),
-                        tint = if (market.coupons > 0) RedBase else Gray400,
+                        tint = if (market.coupons > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.outline,
                         painter = painterResource(id = R.drawable.ic_ticket),
                         contentDescription = "Ícone de Cupom"
                     )
                     Text(
                         text = "${market.coupons} cupons disponíveis",
-                        color = Gray400,
+                        color = MaterialTheme.colorScheme.outline,
                         style = Typography.bodyMedium.copy(fontSize = 12.sp)
                     )
                 }
@@ -112,7 +108,7 @@ private fun MarketCardPreview() {
             name = "Sabor Grill",
             description = "Churrascaria com cortes nobres e buffet variado. Experiência completa para os amantes de carne.",
             coupons = 0,
-            rules = emptyList(),
+            //rules = emptyList(),
             latitude = -23.55974230991911,
             longitude = -46.65814845249887,
             address = "Av. Paulista - Bela Vista",

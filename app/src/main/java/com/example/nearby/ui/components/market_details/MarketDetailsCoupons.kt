@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,11 +19,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.nearby.ui.theme.Gray400
-import com.example.nearby.ui.theme.GreenExtraLight
 import com.example.nearby.ui.theme.Typography
 import com.example.nearby.R
-import com.example.nearby.ui.theme.GreenBase
 
 @Composable
 fun MarketDetailsCoupons(modifier: Modifier = Modifier, coupons: List<String>) {
@@ -33,7 +31,7 @@ fun MarketDetailsCoupons(modifier: Modifier = Modifier, coupons: List<String>) {
         Text(
             text = "Utilize esse cupon",
             style = Typography.headlineSmall,
-            color = Gray400
+            color = MaterialTheme.colorScheme.outline
         )
         coupons.forEach { c ->
             Row(
@@ -41,7 +39,7 @@ fun MarketDetailsCoupons(modifier: Modifier = Modifier, coupons: List<String>) {
                     .fillMaxWidth()
                     .height(48.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(GreenExtraLight)
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -49,13 +47,13 @@ fun MarketDetailsCoupons(modifier: Modifier = Modifier, coupons: List<String>) {
                 Icon(
                     modifier = Modifier.size(24.dp),
                     painter = painterResource(R.drawable.ic_ticket),
-                    tint = GreenBase,
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = "Ícone de cupons"
                 )
                 Text(
                     text = c,
                     style = Typography.headlineSmall,
-                    color = Gray400
+                    color = MaterialTheme.colorScheme.outline
                 )
             }
         }

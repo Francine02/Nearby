@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,9 +15,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.nearby.data.model.Category
-import com.example.nearby.ui.theme.Gray300
-import com.example.nearby.ui.theme.Gray400
-import com.example.nearby.ui.theme.GreenBase
 import com.example.nearby.ui.theme.Typography
 
 @Composable
@@ -39,21 +37,21 @@ fun CategoryFilterChip(
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(id = it),
                     contentDescription = "Icone de filtro da categoria",
-                    tint = if (isSelected) Color.White else Gray300
+                    tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.outline
                 )
             }
         },
         border = FilterChipDefaults.filterChipBorder(
             enabled = false,
             selected = isSelected,
-            disabledBorderColor = Gray400,
+            disabledBorderColor = MaterialTheme.colorScheme.outline,
             borderWidth = 1.dp,
             selectedBorderWidth = 0.dp,
             selectedBorderColor = Color.Transparent
         ),
         colors = FilterChipDefaults.filterChipColors(
-            containerColor = Color.White,
-            selectedContainerColor = GreenBase
+            containerColor = MaterialTheme.colorScheme.onPrimary,
+            selectedContainerColor = MaterialTheme.colorScheme.primary
         ),
         selected = isSelected,
         onClick = { onClick(!isSelected) },
@@ -61,7 +59,7 @@ fun CategoryFilterChip(
             Text(
                 text = category.name,
                 style = Typography.bodyMedium,
-                color = if (isSelected) Color.White else Gray300
+                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.outline
             )
         }
     )

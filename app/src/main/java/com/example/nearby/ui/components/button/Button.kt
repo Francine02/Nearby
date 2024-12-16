@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.nearby.R
-import com.example.nearby.ui.theme.GreenBase
 import com.example.nearby.ui.theme.Typography
 
 @Composable
@@ -33,7 +33,7 @@ fun Button(
         shape = RoundedCornerShape(16.dp),
         contentPadding = if (text == null && iconRes != null) PaddingValues(8.dp) else ButtonDefaults.ContentPadding,
         colors = ButtonDefaults.buttonColors(
-            containerColor = GreenBase
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         onClick = onClick
     ) {
