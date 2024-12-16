@@ -1,4 +1,4 @@
-package com.example.nearby.ui.screen
+package com.example.nearby.ui.screen.market
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -13,12 +13,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,16 @@ import com.example.nearby.ui.theme.Typography
 import com.example.nearby.R
 
 @Composable
-fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigateBack: () -> Unit) {
+fun MarketDetailsScreen(
+    modifier: Modifier = Modifier,
+    uiState: MarketDetailsUiState,
+    onEvent: (MarketDetailsUiEvent) -> Unit,
+    onNavigateToQRCodeScanner: () -> Unit,
+    market: Market, onNavigateBack: () -> Unit
+) {
+    LaunchedEffect(true) {
+        onEvent(MarketDetailsUiEvent.OnFetchRules(marketId = market.id))
+    }
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -52,7 +62,7 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
                 .fillMaxWidth()
                 .fillMaxHeight(0.75f)
                 .align(Alignment.BottomCenter)
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.onPrimary)
         ) {
             Column(
                 modifier = Modifier
@@ -78,26 +88,29 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
                             .padding(vertical = 24.dp)
                     )
 
-                    if (market.rules.isNotEmpty())
-                        MarketDetailsRules(rule = market.rules)
+                    if (!uiState.rules.isNullOrEmpty())
+                        MarketDetailsRules(rule = uiState.rules)
                     HorizontalDivider(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 24.dp)
                     )
-                    MarketDetailsCoupons(coupons = listOf("ASDA123"))
+                    if (!uiState.coupons.isNullOrEmpty())
+                        MarketDetailsCoupons(coupons = listOf(uiState.coupons))
                 }
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 24.dp),
                     text = "Ler QR Code",
-                    onClick = {}
+                    onClick = onNavigateToQRCodeScanner
                 )
             }
         }
-        Button (
-            modifier = Modifier.align(Alignment.TopStart).padding(24.dp),
+        Button(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(24.dp),
             iconRes = R.drawable.ic_arrow_left,
             onClick = onNavigateBack
         )
@@ -110,6 +123,9 @@ fun MarketDetailsScreen(modifier: Modifier = Modifier, market: Market, onNavigat
 private fun MarketDetailsScreenPreview() {
     MarketDetailsScreen(
         market = mockMarket.first(),
+        uiState = MarketDetailsUiState(),
+        onEvent = {},
+        onNavigateToQRCodeScanner = {},
         onNavigateBack = {}
     )
 }
